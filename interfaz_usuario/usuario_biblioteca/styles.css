@@ -1,0 +1,240 @@
+/* Reset de márgenes y rellenos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Contenedor para centrar todo el contenido */
+.container {
+  max-width: 1200px; /* Máximo ancho del contenido */
+  margin: 0 auto; /* Centrar horizontalmente */
+  padding: 0 20px; /* Añadir un pequeño margen en los lados */
+}
+
+/* Header */
+header {
+  background-color: #fff;
+  padding: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Espacio debajo del encabezado */
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between; /* Separar título y carrito */
+  align-items: center;
+}
+
+/* Título */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffb74d; /* Naranja claro */
+  margin-left: 10px; /* Ajustar margen a la izquierda */
+}
+
+/* Botón Volver */
+.cart-button {
+  background-color: #ffb74d; /* Naranja claro */
+  color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px; /* Ajustar margen a la derecha */
+}
+
+.cart-button:hover {
+  background-color: #f19243; /* Naranja más intenso */
+}
+
+/* Main Section */
+main {
+  padding: 20px 0;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+}
+
+/* Title for the Categories */
+.category-header {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff; /* Naranja claro */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Categories Section */
+.category-container {
+  display: flex;
+  flex-direction: row; /* Apilar las categorías verticalmente */
+  gap: 30px;
+  justify-content: center;
+  margin-top: 30px;
+  flex-wrap: wrap; /* Asegura que las categorías se ajusten en pantallas más pequeñas */
+}
+
+/* Categoria individual */
+.category {
+  background-color: #fff;
+  padding: 20px;  /* Más espacio dentro del contenedor */
+  width: 100%;
+  max-width: 300px;  /* Contenedor más pequeño */
+  border: 2px solid #ffffff;  /* Borde visible, color naranja */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;  /* Necesario para posicionar el signo + */
+  margin-bottom: 20px;  /* Espacio entre los recuadros */
+}
+
+.category:hover {
+  transform: scale(1.05);
+}
+
+/* Categoria Imágenes */
+.category img {
+  width: 50%;  /* Limitar el ancho de la imagen al 70% del contenedor */
+  height: auto; /* Mantener la proporción original de la imagen */
+  max-height: 200px; /* Limitar la altura máxima para que sea más pequeña */
+  object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+  margin-bottom: 15px;
+  border: none; /* Sin borde alrededor de la imagen */
+}
+
+/* Categoria Titulo */
+.category-title {
+  font-size: 18px; /* Reducir tamaño del texto */
+  margin-top: 10px;
+  color: #333;
+}
+
+/* File input */
+input[type="file"] {
+  display: none;
+}
+
+/* Add button in the category */
+.category label {
+  display: inline-block;
+  background-color: #ffffff; /* Naranja claro */
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.category label:hover {
+  background-color: #ffffff; /* Naranja más intenso */
+}
+
+/* Botón de agregar al carrito dentro de cada categoría */
+.add-to-cart {
+  background-color: #ffffff; /* Naranja claro */
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 14px;
+  border: none;
+  width: 100%;
+}
+
+/* Botón de agregar al carrito hover */
+.add-to-cart:hover {
+  background-color: #ffa726; /* Naranja más intenso */
+}
+
+/* Signo de + dentro del recuadro de cada categoría */
+.add-to-cart .plus {
+  font-size: 20px;  /* Tamaño adecuado del signo + */
+  background-color: #ffb74d;
+  color: white;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 auto;  /* Centrar el botón dentro de su contenedor */
+  position: absolute;  /* Posicionarlo absolutamente dentro del recuadro */
+  bottom: 20px;  /* Colocarlo hacia abajo dentro del recuadro */
+  left: 50%;  /* Alinearlo al centro */
+  transform: translateX(-50%);  /* Ajustar el desplazamiento para que esté perfectamente centrado */
+}
+
+.add-to-cart .plus:hover {
+  background-color: #ffa726;
+}
+
+/* Media Queries para pantallas más pequeñas */
+
+/* Para tabletas y pantallas pequeñas */
+@media (max-width: 768px) {
+  .category-container {
+    flex-direction: column; /* Apilar las categorías verticalmente */
+    gap: 20px;
+  }
+
+  .category {
+    width: 90%; /* Hacer los recuadros más anchos en pantallas pequeñas */
+    margin-bottom: 15px; /* Separar las categorías */
+  }
+
+  .category-header {
+    font-size: 20px; /* Reducir tamaño del título */
+  }
+}
+
+/* Para teléfonos móviles */
+@media (max-width: 480px) {
+  header .container {
+    flex-direction: column; /* Centrar los elementos en el header */
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 20px; /* Reducir el tamaño del logo */
+  }
+
+  .cart-button {
+    font-size: 14px; /* Reducir el tamaño del botón */
+    padding: 8px 16px;
+  }
+
+  .category-container {
+    flex-direction: column; /* Apilar las categorías verticalmente */
+    gap: 15px;
+  }
+
+  .category {
+    width: 100%; /* Hacer las categorías 100% del ancho disponible */
+  }
+
+  .category-title {
+    font-size: 16px; /* Reducir el tamaño del título */
+  }
+
+  .add-to-cart {
+    font-size: 12px; /* Reducir el tamaño del texto */
+  }
+}

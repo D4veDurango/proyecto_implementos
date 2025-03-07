@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préstamo Implementos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Biblioteca</h1>
+            <!-- Cambié el texto del botón a solo el signo + -->
+            <button class="cart-button">atras</button>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <h2 class="category-header">disponibles</h2>
+            <section class="category-container">
+                <div class="category">
+                    <input type="file" id="mercadeo-upload" accept="image/*">
+                    <label for="mercadeo-upload">
+                        <img src="static/images.png" alt="Mercadeo" class="category-img" id="mercadeo-img">
+                    </label>
+                    <span class="category-title">Teclado</span>
+                    <button class="add-to-cart">Agregar al carrito</button>
+                </div>
+                <div class="category">
+                    <input type="file" id="biblioteca-upload" accept="image/*">
+                    <label for="biblioteca-upload">
+                        <img src="static/Universidad_Catolica_Luis_Amigo_Centro_Regional_Apartado.jpg" alt="Biblioteca" class="category-img" id="biblioteca-img">
+                    </label>
+                    <span class="category-title">Mouse</span>
+                    <button class="add-to-cart">Agregar al carrito</button>
+                </div>
+                <div class="category">
+                    <input type="file" id="servicios-upload" accept="image/*">
+                    <label for="servicios-upload">
+                        <img src="static/images.png" alt="Servicios Generales" class="category-img" id="servicios-img">
+                    </label>
+                    <span class="category-title">Mouse</span>
+                    <button class="add-to-cart">Agregar al carrito</button>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script>
+        // Para cambiar las imágenes cuando se suban nuevos archivos
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById(event.target.id.replace('-upload', '-img')).src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        // Función para agregar al carrito
+        let cartCount = 0;
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                cartCount++;
+                document.querySelector('.cart-button').textContent = `+ (${cartCount})`;
+            });
+        });
+    </script>
+</body>
+</html>

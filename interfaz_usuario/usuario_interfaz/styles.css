@@ -1,0 +1,143 @@
+/* Reset de márgenes y rellenos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Contenedor para centrar todo el contenido */
+.container {
+  max-width: 1200px; /* Máximo ancho del contenido */
+  margin: 0 auto; /* Centrar horizontalmente */
+  padding: 0 20px; /* Añadir un pequeño margen en los lados */
+}
+
+/* Header */
+header {
+  background-color: #fff;
+  padding: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Espacio debajo del encabezado */
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between; /* Separar título y carrito */
+  align-items: center;
+}
+
+/* Título */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffb74d; /* Naranja */
+  margin-left: 10px; /* Ajustar margen a la izquierda */
+}
+
+/* Carrito */ 
+.cart-button {
+  background-color: #ffb74d; /* Naranja claro */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px; /* Ajustar margen a la derecha */
+}
+
+.cart-button:hover {
+  background-color: #ffa726; /* Naranja más intenso */
+}
+
+/* Main Section */
+main {
+  padding: 20px 0;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+}
+
+/* Title for the Categories */
+.category-header {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff; /* Naranja */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Categories Section */
+.category-container {
+  display: flex;
+  flex-direction: column; /* Apilar las categorías verticalmente */
+  gap: 30px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+/* Categoria individual */
+.category {
+  background-color: #fff;
+  padding: 20px;  /* Más espacio dentro del contenedor */
+  width: 100%;
+  max-width: 300px;  /* Contenedor más pequeño */
+  border: 2px solid #ffffff;  /* Borde visible, color naranja */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.category:hover {
+  transform: scale(1.05);
+}
+
+/* Categoria Imágenes */
+.category img {
+  width: 50%;  /* Limitar el ancho de la imagen al 70% del contenedor */
+  height: auto; /* Mantener la proporción original de la imagen */
+  max-height: 200px; /* Limitar la altura máxima para que sea más pequeña */
+  object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+  margin-bottom: 15px;
+  border: none; /* Sin borde alrededor de la imagen */
+}
+
+/* Categoria Titulo */
+.category-title {
+  font-size: 18px; /* Reducir tamaño del texto */
+  margin-top: 10px;
+  color: #333;
+}
+
+/* File input */
+input[type="file"] {
+  display: none;
+}
+
+/* Add button in the category */
+.category label {
+  display: inline-block;
+  background-color: #ffffff; /* Naranja claro */
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.category label:hover {
+  background-color: #ffffff; /* Naranja más intenso */
+}

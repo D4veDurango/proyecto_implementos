@@ -1,0 +1,202 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo General del Body */
+body {
+  background-color: #f6e6d8; /* Beige claro */
+  font-family: 'Calibri', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f6e6d8, #d97a40);
+
+  /* Animación de fondo dinámico */
+  animation: gradientBG 10s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Logo en la esquina superior izquierda con efecto holográfico */
+.logo {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 80px;
+  opacity: 0.8;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 
+    0 0 5px rgba(255, 99, 71, 0.8),
+    0 0 10px rgba(255, 20, 147, 0.8),
+    0 0 20px rgba(50, 205, 50, 0.8);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  animation: holographicGlow 3s infinite alternate;
+}
+
+@keyframes holographicGlow {
+  0% {
+    opacity: 0.8;
+    text-shadow: 
+      0 0 5px rgba(255, 99, 71, 0.8),
+      0 0 10px rgba(255, 20, 147, 0.8),
+      0 0 20px rgba(50, 205, 50, 0.8);
+  }
+  100% {
+    opacity: 1;
+    text-shadow: 
+      0 0 10px rgba(255, 99, 71, 1),
+      0 0 20px rgba(255, 20, 147, 1),
+      0 0 40px rgba(50, 205, 50, 1);
+  }
+}
+
+.logo:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* Estilo del formulario con efecto 3D y neón */
+.form-register {
+  width: 100%;
+  max-width: 450px;
+  background: linear-gradient(160deg, #d97a40, #c46a34);
+  padding: 30px;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 
+    0 0 10px rgba(255, 99, 71, 0.6),
+    0 0 20px rgba(255, 20, 147, 0.6),
+    0 0 40px rgba(50, 205, 50, 0.6);
+  text-align: center;
+  animation: float 3s ease-in-out infinite;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transform-style: preserve-3d;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotateX(0) rotateY(0);
+  }
+  50% {
+    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+  }
+}
+
+/* Estilo del título con efecto de texto flotante */
+.form-register h4 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #f0d2b5;
+  animation: textFloat 3s ease-in-out infinite;
+}
+
+@keyframes textFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Inputs y Select con efecto de neón */
+.controls {
+  width: 100%;
+  background: #c16b3a;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;  /* Aumenta el margen inferior */
+  border: 1px solid #a25729;
+  font-size: 16px;
+  color: white;
+  appearance: none;
+  transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.controls:focus {
+  border-color: #8a4421;
+  outline: none;
+  background: #f9f2e3;
+  color: #333;
+  box-shadow: 
+    0 0 5px rgba(255, 99, 71, 0.8),
+    0 0 10px rgba(255, 20, 147, 0.8),
+    0 0 20px rgba(50, 205, 50, 0.8);
+}
+
+.controls::placeholder {
+  color: #f0d2b5;
+}
+
+.controls:focus::placeholder {
+  color: #8a4421;
+}
+
+/* Botón con efecto de neón y transformación 3D */
+.botons {
+  width: 100%;
+  background: #a25729;
+  border: none;
+  padding: 14px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 
+    0 0 5px rgba(255, 99, 71, 0.8),
+    0 0 10px rgba(255, 20, 147, 0.8),
+    0 0 20px rgba(50, 205, 50, 0.8);
+  transform-style: preserve-3d;
+  margin-top: 20px; /* Aumenta el margen superior */
+}
+
+.botons:hover {
+  background: #873e1d;
+  transform: translateY(-3px) rotateX(5deg) rotateY(5deg);
+  box-shadow: 
+    0 0 10px rgba(255, 99, 71, 1),
+    0 0 20px rgba(255, 20, 147, 1),
+    0 0 40px rgba(50, 205, 50, 1);
+}
+
+/* RESPONSIVE: Ajustes para dispositivos móviles */
+@media (max-width: 480px) {
+  .form-register {
+    padding: 20px;
+  }
+
+  .form-register h4 {
+    font-size: 18px;
+  }
+
+  .controls {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .botons {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .logo {
+    width: 60px;
+  }
+}

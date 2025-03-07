@@ -1,0 +1,253 @@
+:root {
+    --color-primary: #f8944d;
+    --color-secondary: #ff6f61;
+    --color-background: linear-gradient(135deg, #f7ede6, #e0d1c3);
+    --color-footer: linear-gradient(135deg, #007B99, #005f73);
+    --color-text: #333;
+    --color-white: #fff;
+    --shadow-default: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.2);
+    --transition-default: all 0.3s ease;
+}
+
+/* Controles del carrusel con animación 3D */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(80%);
+    transition: var(--transition-default);
+    transform-style: preserve-3d;
+}
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+    transform: scale(1.2) rotateY(15deg); /* Efecto 3D al hacer hover */
+    opacity: 0.9;
+}
+
+/* Ajustes generales con degradado dinámico y scroll suave */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--color-background);
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* Header con efecto de vidrio y sombra dinámica */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-default);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Logo con animación 3D y sombra */
+.header img {
+    height: 80px;
+    width: auto;
+    transition: var(--transition-default);
+    transform-style: preserve-3d;
+}
+
+.header img:hover {
+    transform: rotateY(15deg) scale(1.1);
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+}
+
+/* Contenedor del título con animación de texto y sombra */
+.center {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.center h1 {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 36px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: textGradient 5s infinite alternate;
+    text-shadow: 0 0 10px rgba(248, 148, 77, 0.3);
+}
+
+@keyframes textGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Botón de Google con efecto de neón, gradiente animado y sombra dinámica */
+.g_id_signin {
+    cursor: pointer;
+    transition: var(--transition-default);
+    border-radius: 8px;
+    padding: 12px 24px;
+    background: var(--color-white);
+    border: 2px solid var(--color-primary); /* Aseguramos que el borde tenga color */
+    box-shadow: var(--shadow-default);
+    position: relative;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block; /* Hace que el área de clic se expanda a toda el área del botón */
+    box-sizing: border-box; /* Incluye el borde en el tamaño total del botón */
+    min-width: 150px; /* Añade un tamaño mínimo para mejorar la área de clic */
+    padding: 12px 30px; /* Ajusta el padding para darle más espacio de clic */
+    text-align: center;
+}
+
+.g_id_signin::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    z-index: -1;
+    opacity: 0;
+    transition: var(--transition-default);
+    pointer-events: none; /* Asegura que los pseudoelementos no interfieran con los clics */
+}
+
+.g_id_signin:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    color: var(--color-white);
+}
+
+.g_id_signin:hover::before {
+    opacity: 1;
+}
+
+.g_id_signin::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: var(--transition-default);
+    z-index: 0;
+    pointer-events: none; /* Asegura que el pseudoelemento no interfiera con los clics */
+}
+
+.g_id_signin:active::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+}
+
+/* Efecto de neón al hacer hover */
+.g_id_signin:hover {
+    box-shadow: 0 0 15px rgba(248, 148, 77, 0.6), 0 0 30px rgba(255, 111, 97, 0.4);
+}
+
+/* Animación de pulsación al hacer clic */
+.g_id_signin:active {
+    animation: clickPulse 0.3s ease-in-out;
+}
+
+@keyframes clickPulse {
+    0% {
+        transform: translateY(-5px) scale(1);
+    }
+    50% {
+        transform: translateY(-5px) scale(0.95);
+    }
+    100% {
+        transform: translateY(-5px) scale(1);
+    }
+}
+
+/* Contenedor principal con efecto de flotación y sombra */
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-default);
+    backdrop-filter: blur(10px);
+    animation: floatContainer 6s infinite ease-in-out;
+}
+
+@keyframes floatContainer {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Pie de página con degradado animado y efecto de partículas */
+footer {
+    margin-top: auto;
+    padding: 20px;
+    background: var(--color-footer);
+    font-size: 14px;
+    color: var(--color-white);
+    text-align: left;
+    padding-left: 20px;
+    font-family: 'Roboto Condensed', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 70%);
+    animation: rotateGradient 10s linear infinite;
+}
+
+@keyframes rotateGradient {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+footer p {
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+footer p a {
+    color: var(--color-white);
+    text-decoration: none;
+    transition: var(--transition-default);
+}
+
+footer p a:hover {
+    color: var(--color-primary);
+}

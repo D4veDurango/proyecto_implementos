@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Préstamos de Implementos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sigmar&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="scrip.js">
+     <link rel="stylesheet" href="style.css">
+     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+
+   
+</head>
+
+<body class="fade-in">
+    <div class="header">
+        <img src="static/UCatolicaLuisAmigo.png" alt="Universidad Católica Luis Amigó">
+        <div class="center">
+            <h1>Solicitud de Préstamos de Implementos</h1>
+        </div>
+
+        <div id="g_id_onload"
+             data-client_id="83711085831-jj3v6f2ku7iuf9ja9g56mgm7ha4do56r.apps.googleusercontent.com"
+             data-context="signin"
+             data-ux_mode="popup"
+             data-callback="handleCredentialResponse"
+             data-auto_select="false">
+        </div>
+
+        <div class="g_id_signin"
+             data-type="standard"
+             data-shape="rectangular"
+             data-theme="outline"
+             data-text="signin_with"
+             data-size="large">
+        </div>
+    </div>
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-pause="false">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="5000">
+                <div class="container">
+                    <img src="static/2.jpg" alt="Bienvenidos" style="width: 100%; height: auto;">
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="5000">
+                <div class="container">
+                    <img src="static/1.jpg" class="d-block w-100" alt="Salida" style="width: 100%; height: auto;">
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+
+    <script src="scrip.js"></script>
+
+
+
+    <footer>
+
+        <p>Universidad Católica Luis Amigó © 2025</p>
+    </footer>
+    
+
+</body>
+</html>
