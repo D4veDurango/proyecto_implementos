@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Solicitudes — Préstamo Implementos</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="panel-solicitudes.css">
+</head>
+<body>
+ <header>
+  <div class="container">
+    <h1 class="logo">Seguimiento de Mis Solicitudes</h1>
+    <div class="header-buttons">
+      <!-- Botón Volver -->
+      <a href="index.html" class="btn-back-header">
+        <i class="fas fa-arrow-left"></i> Volver
+      </a>
+
+      <!-- Botón Cerrar Sesión -->
+      <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+  </div>
+</header>
+  <main>
+    <div class="container" id="panel-mis-solicitudes">
+      <div class="card">
+        <div class="card-body">
+          <table id="tabla-solicitudes">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Implemento</th>
+                <th>Fecha Solicitud</th>
+                <th>Progreso</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Las filas se generan por panel_solicitudes.js -->
+            </tbody>
+          </table>
+          <div id="mensaje-vacio" class="text-center" style="display:none;">
+            No se encontraron solicitudes.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="panel_solicitudes.js"></script>
+</body>
+</html>

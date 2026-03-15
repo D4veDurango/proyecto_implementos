@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Préstamo de Implementos - Entregadas</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Fleur+De+Leah&display=swap" rel="stylesheet" />
+
+  <!-- CSS global -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1 class="logo">Historial de Entregas</h1>
+      <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <nav class="sidebar">
+      <h3>Menú</h3>
+      <ul>
+        <li><a href="../base.html">Agregar o Quitar Implementos</a></li>
+        <li><a href="../en_espera_administrador/index.html">En Espera</a></li>
+        <li><a href="index.html" class="active-link">Entregadas</a></li>
+        <li><a href="../devoluciones_administrador/index.html">Devoluciones</a></li>
+        <li><a href="../../index.html">Salir</a></li>
+      </ul>
+    </nav>
+
+    <main class="content">
+      <h2 class="category-title">Historial de Entregas</h2>
+      <div id="contenedor-entregados">
+        <p class="loading-message">Cargando solicitudes entregadas…</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="scrip.js"></script>
+</body>
+</html>

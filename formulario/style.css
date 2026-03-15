@@ -200,3 +200,26 @@ body {
     width: 60px;
   }
 }
+  /* Mensaje fijo en la parte superior, fuera del cuadro */
+    .mensaje-fixed {
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 300px;
+      max-width: 90%;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      text-align: center;
+      z-index: 1000;
+    }
+    .mensaje-fixed.success {
+      background-color: rgba(0,128,0,0.1);
+      color: #006400;
+    }
+    .mensaje-fixed.error {
+      background-color: rgba(255,0,0,0.1);
+      color: #8B0000;
+    }
+  

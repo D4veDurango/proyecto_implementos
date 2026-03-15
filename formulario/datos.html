@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datos Registrados</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <section class="form-register">
+    <h4>Últimos Registros</h4>
+    <div id="datosMostrar">
+      <p>Cargando datos...</p>
+    </div>
+  </section>
+
+  <script>
+    fetch("http://localhost:3000/registros")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("❌ Error al obtener los datos del servidor.");
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (!data || data.length === 0) {
+          document.getElementById("datosMostrar").innerHTML = "<p>❌ No hay registros disponibles.</p>";
+          return;
+        }
+
+        let contenido = data.map(registro => `
+          <p><strong>Nombre:</strong> ${registro.nombres}</p>
+          <p><strong>Apellido:</strong> ${registro.apellidos}</p>
+          <p><strong>Tipo de Documento:</strong> ${registro.tipo_documento}</p>
+          <p><strong>Número de Documento:</strong> ${registro.documento}</p>
+          <p><strong>Teléfono:</strong> ${registro.telefono}</p>
+          <hr>
+        `).join("");
+
+        document.getElementById("datosMostrar").innerHTML = contenido;
+      })
+      .catch(error => {
+        console.error("❌ Error en la petición:", error);
+        document.getElementById("datosMostrar").innerHTML = "<p>❌ Error al cargar los datos.</p>";
+      });
+  </script>
+
+</body>
+</html>

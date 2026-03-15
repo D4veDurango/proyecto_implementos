@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préstamo de Implementos</title>
+    
+    <!-- Conexión a Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Fleur+De+Leah&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <h1 class="logo">Préstamo de Implementos</h1>
+            <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <!-- Contenedor principal -->
+    <div class="main-container">
+        <!-- Barra lateral -->
+        <div class="sidebar" id="sidebar">
+            <h3 class=>Menú</h3>
+            
+            <!-- Implementos con Submenú -->
+            <div class="submenu">
+                <a href="#" onclick="toggleSubmenu()">Implementos ▼</a>
+                <div class="submenu-content" id="submenu">
+                    <a href="../eliminar/index.html">Quitar Implemento</a>
+                </div>
+            </div>
+
+             <!-- solicitudes con Submenú -->
+             <div class="submenu">
+                <a href="#" onclick="toggleSubmenu()">Solicitudes ▼</a>
+                <div class="submenu-content" id="submenu">
+                    <a href="en_espera_administrador/index.html">en espera</a>
+                    <a href="entregadas_administrador/index.html">entregadas</a>
+                </div>
+            </div>
+
+            <a href="../index.html" class="home-link">Ir a la pagina principal</a> <!-- Enlace destacado para ir al Home -->
+            
+        </div>
+
+        <!-- Contenido Principal -->
+        <main>
+            <div class="container">
+                <section class="category-container">
+                    <div class="category">
+                        <img src="static/images.png" alt="Teclado" class="category-img">
+                        <span class="category-title">TECLADO</span>
+                    </div>
+                    <div class="category">
+                        <img src="static/Universidad_Catolica_Luis_Amigo_Centro_Regional_Apartado.jpg" alt="Mouse" class="category-img">
+                        <span class="category-title">MOUSE</span>
+                    </div>
+                    <div class="category">
+                        <img src="static/images.png" alt="Portátil" class="category-img">
+                        <span class="category-title">PORTÁTIL</span>
+                    </div>
+                    <div class="category">
+                        <img src="static/images.png" alt="Proyector" class="category-img">
+                        <span class="category-title">PROYECTOR</span>
+                    </div>
+                    <div class="category">
+                        <img src="static/Universidad_Catolica_Luis_Amigo_Centro_Regional_Apartado.jpg" alt="Funda de Portátil" class="category-img">
+                        <span class="category-title">FUNDA DE PORTÁTIL</span>
+                    </div>
+                </section>
+            </div>
+        </main>
+        
+        
+    </div>
+
+    <script src="scrip.js"></script>
+
+</body>
+</html>

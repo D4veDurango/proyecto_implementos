@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préstamo Implementos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Préstamo Implementos</h1>
+            <!-- Contenedor de los botones -->
+            <div class="header-buttons">
+                <button class="cart-button">🛒: 0</button>
+                <button class="send-request" id="send-request-button">Enviar solicitud</button>
+                <a href="seguimiento.html" class="btn-requests with-icon">Mis solicitudes</a>
+                <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <h2 class="category-header">Categorías</h2>
+            <section class="category-container">
+                <div class="category" id="mercadeo-category">
+                    <img src="static/20250526_0853_Mercadeo Universitario Campestre_simple_compose_01jw6dvfq7e8pathgwdfk0fjz4.png" alt="Mercadeo" class="category-img">
+                    <span class="category-title">Mercadeo</span>
+                           <p class="category-description">Materiales para campañas y eventos de promoción.</p>
+                </div>
+                <div class="category" id="biblioteca-category">
+                    <img src="static/20250526_0840_Biblioteca Moderna Campestre_simple_compose_01jw6d3kwhe3msvfnzaq0g46nb.png" 
+                         alt="Biblioteca" 
+                         class="category-img">
+                    <span class="category-title">Biblioteca</span>
+                     <p class="category-description">Recursos para estudio, investigación y eventos culturales.</p>
+                </div>
+                <div class="category" id="servicios-category">
+                    <img src="static/20250526_0902_Servicios Generales Campus_simple_compose_01jw6ebaagfrks1m0ck52m6vkj.png" alt="Servicios Generales" class="category-img">
+                    <span class="category-title">Servicios Generales</span>
+                    <p class="category-description">Equipos y herramientas para mantenimiento y soporte del campus.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script src="scrip.js"></script>  <!-- Archivo de JavaScript -->
+</body>
+</html>

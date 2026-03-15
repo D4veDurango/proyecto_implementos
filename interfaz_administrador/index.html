@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel Administrador</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Fleur+De+Leah&display=swap" rel="stylesheet"/>
+
+  <!-- CSS global -->
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1 class="logo">Préstamo de Implementos</h1>
+      <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <nav class="sidebar">
+      <h3>Menú</h3>
+      <ul>
+        <li><a href="base.html">Agregar o Quitar Implementos</a></li>
+        <li><a href="en_espera_administrador/index.html">En Espera</a></li>
+        <li><a href="entregadas_administrador/index.html">Entregadas</a></li>
+        <li><a href="devoluciones_administrador/index.html">Devoluciones</a></li>
+        <li><a href="../index.html">Salir</a></li>
+      </ul>
+    </nav>
+
+   <main class="content">
+  <h2 class="category-title">Solicitudes Pendientes</h2>
+  <div class="solicitudes-container" id="contenedor-solicitudes">
+    <!-- aquí inyecta las .card -->
+  </div>
+</main>
+
+  </div>
+
+  <script src="scrip.js"></script>
+</body>
+</html>

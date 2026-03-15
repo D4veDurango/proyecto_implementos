@@ -1,0 +1,849 @@
+/* ==========================================================================
+   CSS AVANZADO PARA PANEL DE ADMINISTRADOR (Mayo 2025)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CAPAS CSS (Control de Especificidad y Orden)
+   -------------------------------------------------------------------------- */
+@layer reset, theme, base, layout, components, utilities;
+
+@layer reset {
+  /* Modern Reset Extendido */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font: inherit; /* Heredar fuentes por defecto */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent; /* Para móviles */
+  }
+
+  /* Mejorar comportamiento de imágenes y medios */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-inline-size: 100%; /* Reemplaza max-width */
+    block-size: auto; /* Reemplaza height: auto */
+  }
+
+  /* Quitar estilos de lista por defecto */
+  menu, ol, ul {
+    list-style: none;
+  }
+
+  /* Campos de formulario heredan tipografía */
+  input, button, textarea, select {
+    font: inherit;
+  }
+
+  /* Evitar desbordamientos de texto */
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+
+  /* Raíz con scroll suave */
+  :root {
+    scroll-behavior: smooth;
+    /* Variables para scrollbar (usadas más adelante) */
+    --scrollbar-thumb-bg: hsla(var(--primary-hsl), 0.7);
+    --scrollbar-track-bg: hsla(var(--primary-hsl), 0.1);
+  }
+
+  /* Cuerpo ocupa al menos toda la altura */
+  body {
+    min-block-size: 100vh; /* Reemplaza min-height */
+    text-rendering: optimizeSpeed; /* O optimizeLegibility, según preferencia */
+    line-height: 1.5; /* Base line-height */
+  }
+}
+
+@layer theme {
+  /* --------------------------------------------------------------------------
+     2. SISTEMA DE DISEÑO (CUSTOM PROPERTIES AVANZADAS)
+     -------------------------------------------------------------------------- */
+  :root {
+    /* Paleta de Colores HSL (más flexible para variaciones) */
+    --primary-hsl: 204 100% 30%; /* Azul oscuro profesional -> Era #007b99 pero más oscuro */
+    --primary-light-hsl: 204 100% 40%;
+    --primary-dark-hsl: 204 100% 20%;
+    
+    --accent-hsl: 35 100% 48%; /* Naranja vibrante -> Era #f39200 */
+    --accent-light-hsl: 35 100% 58%;
+    --accent-dark-hsl: 35 100% 38%;
+
+    --neutral-0-hsl: 0 0% 100%;   /* Blanco */
+    --neutral-100-hsl: 210 17% 98%; /* Gris muy claro para fondos */
+    --neutral-200-hsl: 210 16% 93%; /* Gris claro para bordes sutiles */
+    --neutral-700-hsl: 215 15% 48%; /* Gris medio para texto secundario */
+    --neutral-900-hsl: 220 13% 20%; /* Gris oscuro para texto principal */
+    
+    /* Convertir HSL a colores RGB para uso directo */
+    --clr-primary: hsl(var(--primary-hsl));
+    --clr-primary-light: hsl(var(--primary-light-hsl));
+    --clr-primary-dark: hsl(var(--primary-dark-hsl));
+    --clr-accent: hsl(var(--accent-hsl));
+    --clr-accent-light: hsl(var(--accent-light-hsl));
+    --clr-accent-dark: hsl(var(--accent-dark-hsl));
+    
+    --clr-bg: hsl(var(--neutral-100-hsl));
+    --clr-surface: hsl(var(--neutral-0-hsl)); /* Para tarjetas, etc. */
+    --clr-text-primary: hsl(var(--neutral-900-hsl));
+    --clr-text-secondary: hsl(var(--neutral-700-hsl));
+    --clr-text-on-primary: hsl(var(--neutral-0-hsl));
+    --clr-text-on-accent: hsl(var(--neutral-900-hsl)); /* Texto oscuro sobre acento naranja */
+    --clr-border: hsl(var(--neutral-200-hsl));
+    --clr-focus-ring: hsla(var(--accent-hsl), 0.7);
+
+    /* Tipografía Fluida */
+    --font-family-base: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-family-logo: 'Ephesis', cursive; /* Desde HTML */
+    --font-family-heading: 'Fleur De Leah', cursive; /* Desde HTML, para títulos de sección si se desea */
+
+    /* Escala Tipográfica Fluida (ej. type-step-0, type-step-1, etc.) */
+    --type-step--2: clamp(0.69rem, 0.65rem + 0.2vw, 0.8rem);   /* Pequeño */
+    --type-step--1: clamp(0.83rem, 0.78rem + 0.27vw, 0.96rem); /* Default pequeño */
+    --type-step-0: clamp(1rem, 0.94rem + 0.32vw, 1.15rem);     /* Base */
+    --type-step-1: clamp(1.2rem, 1.13rem + 0.38vw, 1.38rem);   /* Títulos pequeños / H4 */
+    --type-step-2: clamp(1.44rem, 1.35rem + 0.46vw, 1.65rem);  /* H3 */
+    --type-step-3: clamp(1.73rem, 1.62rem + 0.55vw, 1.98rem);  /* H2 */
+    --type-step-4: clamp(2.07rem, 1.94rem + 0.66vw, 2.38rem);  /* H1 / Logo */
+    --type-step-5: clamp(2.49rem, 2.33rem + 0.79vw, 2.85rem);  /* Display */
+
+    /* Line Heights */
+    --leading-tight: 1.2;
+    --leading-normal: 1.65;
+    --leading-loose: 1.8;
+
+    /* Espaciado Fluido (ej. space-xs, space-s, etc.) */
+    --space-3xs: clamp(0.25rem, 0.23rem + 0.11vw, 0.31rem);
+    --space-2xs: clamp(0.5rem, 0.45rem + 0.22vw, 0.63rem);
+    --space-xs: clamp(0.75rem, 0.68rem + 0.33vw, 0.94rem);
+    --space-s: clamp(1rem, 0.91rem + 0.43vw, 1.25rem);
+    --space-m: clamp(1.5rem, 1.36rem + 0.65vw, 1.88rem);
+    --space-l: clamp(2rem, 1.81rem + 0.87vw, 2.5rem);
+    --space-xl: clamp(3rem, 2.72rem + 1.3vw, 3.75rem);
+    --space-2xl: clamp(4rem, 3.63rem + 1.74vw, 5rem);
+
+    /* Radios de Borde */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-full: 9999px;
+
+    /* Sombras (más sutiles y modernas) */
+    --shadow-color: 220 60% 15%; /* Color base para sombras */
+    --shadow-elevation-low:
+      0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+      0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+      1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+    --shadow-elevation-medium:
+      0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+      0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+      2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+      5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+    --shadow-elevation-high:
+      0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+      1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color) / 0.34),
+      2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color) / 0.34),
+      4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color) / 0.34),
+      7.6px 15.1px 19px -1.4px hsl(var(--shadow-color) / 0.34),
+      12.8px 25.5px 32.1px -1.8px hsl(var(--shadow-color) / 0.34),
+      21px 41.8px 52.7px -2.1px hsl(var(--shadow-color) / 0.34),
+      33px 65.6px 82.6px -2.5px hsl(var(--shadow-color) / 0.34);
+
+    /* Transiciones */
+    --transition-duration-short: 150ms;
+    --transition-duration-medium: 300ms;
+    --transition-duration-long: 500ms;
+    --transition-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+    --transition-springy: cubic-bezier(0.5, -0.5, 0.5, 1.5); /* Efecto rebote sutil */
+
+    /* Layout */
+    --sidebar-width: clamp(240px, 20vw, 300px);
+    --header-height: clamp(60px, 7vh, 75px);
+    --content-max-width: 1200px;
+    --container-padding: var(--space-m);
+
+    /* Optimización */
+    --contain-standard: layout style paint;
+  }
+}
+
+@layer base {
+  /* --------------------------------------------------------------------------
+     3. ESTILOS BASE Y TIPOGRAFÍA
+     -------------------------------------------------------------------------- */
+  body {
+    background-color: var(--clr-bg);
+    color: var(--clr-text-primary);
+    font-family: var(--font-family-base);
+    font-size: var(--type-step-0);
+    line-height: var(--leading-normal);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-heading); /* Usar la fuente de encabezado de Fleur De Leah */
+    font-weight: 400; /* Fleur De Leah es delgada por defecto */
+    line-height: var(--leading-tight);
+    color: var(--clr-primary-dark); /* Encabezados con color primario oscuro */
+  }
+  /* Ajustar tamaños específicos si es necesario */
+  h1 { font-size: var(--type-step-4); letter-spacing: -0.02em; }
+  h2 { font-size: var(--type-step-3); }
+  h3 { font-size: var(--type-step-2); }
+  h4 { font-size: var(--type-step-1); }
+
+  a {
+    color: var(--clr-accent);
+    text-decoration: none;
+    transition: color var(--transition-duration-short) var(--transition-ease-out);
+  }
+  a:hover, a:focus-visible {
+    color: var(--clr-accent-dark);
+    text-decoration: underline;
+    text-decoration-thickness: 0.1em;
+    text-underline-offset: 0.15em;
+  }
+
+  /* Estilos de Foco Globales Mejorados */
+  :focus-visible {
+    outline: 3px solid var(--clr-focus-ring);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm); /* Ayuda a que el outline siga la forma */
+  }
+  /* Quitar outline si el componente maneja su propio :focus-visible */
+  :where(button, .btn, .card):focus-visible {
+    outline: none;
+  }
+
+  /* Scrollbars Personalizadas */
+  ::-webkit-scrollbar {
+    width: 10px; /* Ancho para scrollbars verticales */
+    height: 10px; /* Altura para scrollbars horizontales */
+  }
+  ::-webkit-scrollbar-track {
+    background-color: var(--scrollbar-track-bg);
+    border-radius: var(--radius-full);
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-bg);
+    border-radius: var(--radius-full);
+    border: 2px solid var(--scrollbar-track-bg); /* Para efecto de "padding" */
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--primary-hsl));
+  }
+  /* Para Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg);
+  }
+}
+
+@layer layout {
+  /* --------------------------------------------------------------------------
+     4. LAYOUT PRINCIPAL
+     -------------------------------------------------------------------------- */
+  .main-container {
+    display: grid;
+    /* Propiedades lógicas para dirección de escritura */
+    grid-template-columns: var(--sidebar-width) 1fr;
+    min-block-size: calc(100vh - var(--header-height));
+    margin-block-start: var(--header-height); /* Espacio para header fijo */
+  }
+
+  /* Contenedor general para el contenido principal */
+  .content {
+    padding: var(--container-padding);
+    max-inline-size: var(--content-max-width);
+    margin-inline: auto; /* Centrado */
+    width: 100%;
+  }
+
+  .category-title {
+    color: var(--clr-accent-dark);
+    font-size: var(--type-step-3); /* Usa la fuente de encabezado */
+    margin-block-end: var(--space-l);
+    position: relative;
+    padding-block-end: var(--space-xs);
+    border-block-end: 3px solid var(--clr-accent); /* Borde inferior como acento */
+    width: fit-content; /* Para que el borde no ocupe todo el ancho */
+  }
+  
+  /* Para mensajes de carga o vacíos */
+  .loading-message, 
+  .empty-state-message {
+    grid-column: 1 / -1; /* Ocupar todo el ancho en un grid */
+    padding: var(--space-l) var(--space-m);
+    text-align: center;
+    color: var(--clr-text-secondary);
+    background-color: var(--clr-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-elevation-low);
+    font-size: var(--type-step--1);
+    font-style: italic;
+  }
+}
+
+@layer components {
+  /* --------------------------------------------------------------------------
+     5. COMPONENTES (Header, Sidebar, Tarjetas, Botones)
+     -------------------------------------------------------------------------- */
+
+  /* Header */
+  header {
+    background-color: var(--clr-primary);
+    color: var(--clr-text-on-primary);
+    padding-inline: var(--container-padding);
+    position: fixed;
+    inset-block-start: 0; /* top: 0 */
+    inset-inline: 0; /* left: 0; right: 0 */
+    block-size: var(--header-height);
+    box-shadow: var(--shadow-elevation-medium);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    transition: background-color var(--transition-duration-medium) var(--transition-ease-out),
+                box-shadow var(--transition-duration-medium) var(--transition-ease-out);
+    contain: var(--contain-standard);
+  }
+  header .container {
+    width: 100%;
+    max-inline-size: calc(var(--content-max-width) + 2 * var(--container-padding)); /* Para que el contenido interno se alinee con el .content */
+    margin-inline: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-family: var(--font-family-logo);
+    font-size: var(--type-step-4);
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--clr-text-on-primary);
+    text-decoration: none;
+    transform-origin: left center;
+    transition: transform var(--transition-duration-short) var(--transition-ease-out);
+  }
+  .logo:hover { transform: scale(1.05); }
+  .logo::before {
+    content: '';
+    display: inline-block;
+    inline-size: clamp(24px, 1.5em, 30px); /* Tamaño adaptable */
+    block-size: clamp(24px, 1.5em, 30px);
+    background-color: currentColor;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'%3E%3C/path%3E%3Cpolyline points='9 22 9 12 15 12 15 22'%3E%3C/polyline%3E%3C/svg%3E");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+  }
+
+  /* Botón de Logout */
+  .logout-button {
+    --button-bg: hsla(var(--neutral-0-hsl), 0.15);
+    --button-border: hsla(var(--neutral-0-hsl), 0.3);
+    --button-text: var(--clr-text-on-primary);
+    --button-hover-bg: hsla(var(--neutral-0-hsl), 0.25);
+    
+    background-color: var(--button-bg);
+    border: 1px solid var(--button-border);
+    color: var(--button-text);
+    padding: var(--space-2xs) var(--space-s);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: var(--type-step--1);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color var(--transition-duration-short) var(--transition-ease-out),
+                transform var(--transition-duration-short) var(--transition-ease-out),
+                box-shadow var(--transition-duration-short) var(--transition-ease-out);
+  }
+  .logout-button::before {
+    content: '';
+    display: inline-block;
+    inline-size: 1.1em;
+    block-size: 1.1em;
+    background-color: currentColor;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'%3E%3C/path%3E%3Cpolyline points='16 17 21 12 16 7'%3E%3C/polyline%3E%3Cline x1='21' y1='12' x2='9' y2='12'%3E%3C/line%3E%3C/svg%3E");
+    mask-repeat: no-repeat; mask-position: center;
+  }
+  .logout-button:hover {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevation-low);
+  }
+  .logout-button:focus-visible {
+    background-color: var(--button-hover-bg);
+    box-shadow: 0 0 0 3px var(--clr-primary), 0 0 0 5px hsla(var(--neutral-0-hsl), 0.5); /* Doble anillo */
+  }
+  .logout-button:active {
+    transform: translateY(0);
+    background-color: hsla(var(--neutral-0-hsl), 0.1);
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background-color: var(--clr-primary); /* Fondo oscuro principal */
+    color: var(--clr-text-on-primary);
+    block-size: calc(100vh - var(--header-height));
+    position: sticky;
+    inset-block-start: var(--header-height);
+    padding: var(--space-l) var(--space-m);
+    box-shadow: inset -5px 0 15px -5px hsla(var(--shadow-color), 0.2); /* Sombra interna */
+    overflow-y: auto;
+    contain: var(--contain-standard);
+    transition: transform var(--transition-duration-medium) var(--transition-ease-in-out);
+  }
+  .sidebar h3 {
+    font-family: var(--font-family-base); /* Usar fuente base para el título del menú */
+    font-size: var(--type-step-1);
+    font-weight: 600;
+    color: hsla(var(--neutral-0-hsl), 0.9);
+    padding-block-end: var(--space-s);
+    margin-block-end: var(--space-m);
+    border-block-end: 1px solid hsla(var(--neutral-0-hsl), 0.2);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .sidebar ul { display: flex; flex-direction: column; gap: var(--space-3xs); }
+  .sidebar a {
+    --sidebar-item-bg: transparent;
+    --sidebar-item-text: hsla(var(--neutral-0-hsl), 0.85);
+    --sidebar-item-hover-bg: hsla(var(--neutral-0-hsl), 0.1);
+    --sidebar-item-active-bg: hsla(var(--neutral-0-hsl), 0.15);
+    --sidebar-item-hover-text: hsl(var(--neutral-0-hsl));
+    
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    padding: var(--space-xs) var(--space-s);
+    border-radius: var(--radius-md);
+    color: var(--sidebar-item-text);
+    font-weight: 500;
+    font-size: var(--type-step--1);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden; /* Para efectos de ::after */
+    transition: background-color var(--transition-duration-short) var(--transition-ease-out),
+                color var(--transition-duration-short) var(--transition-ease-out),
+                transform var(--transition-duration-short) var(--transition-ease-out);
+  }
+  .sidebar a::before { /* Icono */
+    content: '';
+    display: inline-block;
+    inline-size: 1.25em;
+    block-size: 1.25em;
+    background-color: currentColor;
+    mask-repeat: no-repeat; mask-position: center; mask-size: contain;
+    transition: transform var(--transition-duration-short) var(--transition-ease-out);
+    flex-shrink: 0;
+  }
+  /* Iconos (mismos SVGs, podrían ser variables si se quiere) */
+  .sidebar a[href="base.html"]::before { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34'%3E%3C/path%3E%3Cpolygon points='18 2 22 6 12 16 8 16 8 12 18 2'%3E%3C/polygon%3E%3C/svg%3E"); }
+  .sidebar a[href="en_espera_administrador/index.html"]::before { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E"); }
+  .sidebar a[href="entregadas_administrador/index.html"]::before { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E"); }
+  .sidebar a[href="devoluciones_administrador/index.html"]::before { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 10h10M3 14h7m10-9l-3 3m0 0l-3-3m3 3V4'%3E%3C/path%3E%3C/svg%3E"); }
+  .sidebar a[href="../index.html"]::before { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3'%3E%3C/path%3E%3C/svg%3E"); }
+
+  .sidebar a:hover {
+    background-color: var(--sidebar-item-hover-bg);
+    color: var(--sidebar-item-hover-text);
+    transform: translateX(4px);
+  }
+  .sidebar a:hover::before { transform: scale(1.1) rotate(-5deg); }
+  .sidebar a:active {
+    background-color: var(--sidebar-item-active-bg);
+    transform: translateX(2px);
+  }
+  .sidebar a:focus-visible {
+    color: var(--sidebar-item-hover-text);
+    background-color: var(--sidebar-item-hover-bg);
+    box-shadow: inset 0 0 0 2px var(--clr-accent), 0 0 0 2px var(--sidebar-item-hover-bg); /* Anillo interno y externo */
+  }
+  /* Indicador de página activa (requiere JS para añadir clase 'active-link') */
+  .sidebar a.active-link {
+    background-color: var(--sidebar-item-active-bg);
+    color: hsl(var(--neutral-0-hsl));
+    font-weight: 600;
+  }
+  .sidebar a.active-link::after { /* Pequeña barra lateral indicadora */
+    content: '';
+    position: absolute;
+    inset-block: 20%; /* 30% de padding arriba y abajo */
+    inset-inline-start: 0; /* left:0 */
+    block-size: 60%;
+    inline-size: 4px;
+    background-color: var(--clr-accent);
+    border-start-end-radius: var(--radius-sm); /* top-right */
+    border-end-end-radius: var(--radius-sm); /* bottom-right */
+  }
+
+
+  /* Tarjetas */
+  .solicitudes-container {
+  display: grid;
+  grid-template-columns: 1fr;       /* Una sola columna de ancho completo */
+  row-gap: var(--space-l);          /* Separación vertical entre tarjetas */
+  width: 100%;
+}
+
+  .card {
+    --card-padding: var(--space-s);
+    --card-accent-height: 6px;
+    
+    background-color: var(--clr-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-elevation-medium);
+    overflow: hidden; /* Para clip-path y pseudo-elementos */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    contain: var(--contain-standard); /* Optimización de renderizado */
+    transition: transform var(--transition-duration-medium) var(--transition-ease-out),
+                box-shadow var(--transition-duration-medium) var(--transition-ease-out);
+    /* Para animación de entrada */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInCard var(--transition-duration-long) var(--transition-ease-out) forwards;
+  }
+  @keyframes fadeInCard {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  /* Barra de acento superior */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: var(--card-accent-height);
+    background: linear-gradient(90deg, var(--clr-accent), var(--clr-accent-dark));
+    transition: block-size var(--transition-duration-short) var(--transition-ease-out);
+  }
+  .card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-elevation-high);
+  }
+  .card:hover::before { block-size: calc(var(--card-accent-height) + 2px); }
+  .card:focus-within { /* Cuando un elemento dentro de la tarjeta tiene foco */
+    box-shadow: 0 0 0 3px var(--clr-primary), 0 0 0 6px var(--clr-focus-ring);
+  }
+  
+  .card-header {
+   padding: var(--space-s) var(--card-padding);
+    padding-block-end: var(--space-2xs); /* Menos padding abajo */
+    background-color: hsla(var(--accent-hsl), 0.05); /* Fondo muy sutil */
+    border-block-end: 1px solid var(--clr-border);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline; /* Alinear por la base del texto */
+    gap: var(--space-xs);
+  }
+  .card-header h3 { /* El h3 del JS */
+    font-family: var(--font-family-base); /* Cambiar a fuente base para legibilidad */
+    font-size: var(--type-step-1);
+    font-weight: 600;
+    color: var(--clr-accent-dark);
+    margin:0; /* Quitar margen del JS */
+    text-transform: capitalize; /* Mantener del JS */
+  }
+  .card-header small {
+    font-size: var(--type-step--2);
+    color: var(--clr-text-secondary);
+    white-space: nowrap;
+  }
+
+  .card-body {
+    padding: var(--space-s) var(--card-padding);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* Para que el botón se pueda empujar al final */
+  }
+  /* Estilo para los iconos en las tarjetas */
+.card-body p[data-icon]::before {
+  content: attr(data-icon);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--space-xs);
+  min-width: 1.5em;
+  font-size: 1.2em;
+}
+/* Después de .card-body p[data-icon]::before */
+.card-body h4[data-icon]::before {
+  content: attr(data-icon);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--space-xs);
+  min-width: 1.5em;
+  font-size: 1.2em;
+  line-height: 1;
+  vertical-align: middle;
+}
+  .card-body p {
+    margin-block-end: var(--space-s);
+    color: var(--clr-text-secondary);
+    font-size: var(--type-step--1);
+    line-height: var(--leading-normal);
+  }
+  .card-body p strong {
+    color: var(--clr-text-primary);
+    font-weight: 500;
+  }
+  .card-body hr {
+    border: none;
+    border-block-start: 1px solid var(--clr-border);
+   margin-block: var(--space-s);
+  }
+  .card-body h4 { /* Productos solicitados */
+    font-family: var(--font-family-base);
+    font-size: var(--type-step-0);
+    color: var(--clr-primary);
+     margin-block-end: var(--space-2xs);
+    font-weight: 600;
+  }
+  .card-body ul {  margin-block-end: var(--space-s);; }
+  .card-body ul li {
+    padding-block: var(--space-2xs);
+    border-block-end: 1px dashed hsla(var(--neutral-200-hsl), 0.7);
+    font-size: var(--type-step--1);
+  }
+  .card-body ul li:last-child { border-block-end: none; }
+  .card-body ul li strong { font-weight: 500; color: var(--clr-text-primary); }
+  .card-body ul li em { /* Comentario */
+    color: var(--clr-text-secondary);
+    font-size: var(--type-step--2);
+    display: block;
+    margin-block-start: var(--space-3xs);
+    font-style: italic;
+  }
+  .card-body ul li small { /* Fecha pedido item */
+    color: var(--clr-text-secondary);
+    font-size: var(--type-step--2);
+    display: block;
+    margin-block-start: var(--space-3xs);
+  }
+  .card-body .access-button { /* El botón "Ver Detalles" */
+    margin-block-start: auto; /* Empuja el botón al final del card-body */
+    min-inline-size: 100%; /* Ocupa todo el ancho */
+  }
+  
+  /* Container Queries para Tarjetas (Ejemplo) */
+  /* @container (min-inline-size: 450px) {
+    .card-content-wrapper { Cambiar el wrapper si es necesario 
+      display: flex;
+      gap: var(--space-m);
+    }
+    .card-image-container { flex: 0 0 150px; }
+    .card-text-content { flex: 1; }
+  } */
+
+  /* Botones (.btn) */
+  .btn {
+    --btn-padding-block: var(--space-xs);
+    --btn-padding-inline: var(--space-m);
+    --btn-text-color: var(--clr-text-on-primary);
+    --btn-bg-color: var(--clr-accent);
+    --btn-hover-bg-color: var(--clr-accent-dark);
+    --btn-active-bg-color: var(--clr-accent-dark);
+    --btn-focus-ring-color: hsla(var(--accent-hsl), 0.4);
+    --btn-font-size: var(--type-step--1);
+    
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2xs);
+    padding: var(--btn-padding-block) var(--btn-padding-inline);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: var(--btn-font-size);
+    color: var(--btn-text-color);
+    background-color: var(--btn-bg-color);
+    border: 1px solid transparent; /* Para consistencia de tamaño */
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    position: relative; /* Para ::after de ripple */
+    overflow: hidden;
+    user-select: none; /* Evitar selección de texto en click */
+    transform: translateZ(0); /* Promover a capa propia para animaciones */
+    transition: background-color var(--transition-duration-short) var(--transition-ease-out),
+                transform var(--transition-duration-short) var(--transition-ease-out),
+                box-shadow var(--transition-duration-short) var(--transition-ease-out);
+  }
+  .btn:hover {
+    background-color: var(--btn-hover-bg-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevation-low);
+  }
+  .btn:active {
+    transform: translateY(0px) scale(0.98);
+    background-color: var(--btn-active-bg-color);
+    box-shadow: none;
+  }
+  .btn:focus-visible {
+    box-shadow: 0 0 0 3px var(--clr-surface), 0 0 0 5px var(--btn-focus-ring-color);
+  }
+  /* Ripple effect (sutil) */
+  .btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, hsla(var(--neutral-0-hsl), 0.2) 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform .3s, opacity 1s;
+  }
+  .btn:active::after {
+    transform: scale(0,0);
+    opacity: .3;
+    transition: 0s;
+  }
+  /* Botón Primario (Ver Detalles) */
+  .btn-primary { /* Ya tiene estilos de .btn, podemos sobreescribir si es necesario */
+    --btn-bg-color: var(--clr-primary); /* Usa color primario del tema */
+    --btn-hover-bg-color: var(--clr-primary-dark);
+    --btn-active-bg-color: var(--clr-primary-dark);
+    --btn-focus-ring-color: hsla(var(--primary-hsl), 0.4);
+  }
+  /* Botón Secundario (ejemplo) */
+  .btn-secondary {
+    --btn-text-color: var(--clr-accent-dark);
+    --btn-bg-color: hsla(var(--accent-hsl), 0.1);
+    --btn-border-color: var(--clr-accent);
+    --btn-hover-bg-color: hsla(var(--accent-hsl), 0.2);
+    --btn-active-bg-color: hsla(var(--accent-hsl), 0.25);
+    border-color: var(--btn-border-color);
+  }
+  .btn-secondary:hover { border-color: var(--clr-accent-dark); }
+}
+
+@layer utilities {
+  /* --------------------------------------------------------------------------
+     6. CLASES DE UTILIDAD
+     -------------------------------------------------------------------------- */
+  .sr-only { /* Screen Reader Only */
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+  
+  .fade-in-content { /* Animación general de entrada */
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInContent var(--transition-duration-medium) var(--transition-ease-out) forwards;
+    animation-delay: var(--animation-delay, 0ms); /* Permitir retraso personalizado */
+  }
+  @keyframes fadeInContent {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Para modo de alto contraste de Windows */
+  @media (forced-colors: active) {
+    :root {
+      --clr-primary: ButtonText;
+      --clr-accent: Highlight;
+      --clr-bg: Canvas;
+      --clr-surface: Canvas;
+      --clr-text-primary: CanvasText;
+      --clr-text-secondary: GrayText;
+      --clr-border: GrayText;
+      --clr-focus-ring: Highlight;
+    }
+    /* Asegurar que los bordes sean visibles */
+    .btn, .card, header, .sidebar {
+      border: 1px solid ButtonText;
+    }
+    .sidebar a:hover, .sidebar a.active-link {
+      background-color: Highlight;
+      color: HighlightText;
+      border-color: HighlightText;
+    }
+    .btn:focus-visible, .card:focus-within {
+      outline: 3px solid Highlight !important; /* Forzar outline */
+      box-shadow: none !important;
+    }
+  }
+
+  /* Reducir movimiento */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Responsive adjustments (sobreescriben capas anteriores si es necesario) */
+@media (max-width: 992px) {
+  :root {
+    --sidebar-width: 220px;
+    --container-padding: var(--space-s);
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    grid-template-columns: 1fr; /* Sidebar y contenido en una columna */
+  }
+  .sidebar {
+    position: static; /* O usar un off-canvas menu con JS */
+    block-size: auto;
+    box-shadow: var(--shadow-elevation-low); /* Sombra inferior si está apilado */
+    border-block-end: 1px solid var(--clr-border);
+    /* Considerar hacerlo colapsable o un menú horizontal */
+  }
+  .sidebar ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-xs);
+  }
+  .sidebar a:hover { transform: none; } /* Quitar transform en mobile para sidebar grid */
+  
+  .category-title {
+    font-size: var(--type-step-2);
+  }
+  .solicitudes-container {
+    gap: var(--space-m);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --header-height: clamp(50px, 6vh, 60px);
+    --container-padding: var(--space-xs);
+    --type-step-0: clamp(0.9rem, 0.85rem + 0.25vw, 1rem); /* Base más pequeña */
+  }
+  .logo { font-size: var(--type-step-3); }
+  .logo::before { inline-size: 1.2em; block-size: 1.2em; }
+  
+  .logout-button {
+    padding: var(--space-3xs) var(--space-xs);
+    font-size: var(--type-step--2);
+  }
+  .btn {
+    --btn-padding-block: var(--space-2xs);
+    --btn-padding-inline: var(--space-s);
+    --btn-font-size: var(--type-step--1);
+  }
+}

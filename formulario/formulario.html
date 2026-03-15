@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Registro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+
+  <!-- Este contenedor de mensaje queda fijo arriba de todo -->
+  <div id="mensaje" class="mensaje-fixed"></div>
+
+  <section class="form-register">
+    <h4>Formulario de Registro</h4>
+    <form id="registroForm">
+      <div class="input-group">
+        <input class="controls" type="text" id="nombres" name="nombres" placeholder="Ingrese su Nombre" required>
+      </div>
+      <div class="input-group">
+        <input class="controls" type="text" id="apellidos" name="apellidos" placeholder="Ingrese su Apellido" required>
+      </div>
+      <div class="input-group">
+        <select class="controls" id="tipo_documento" name="tipo_documento" required>
+          <option value="" disabled selected>Seleccione tipo de documento</option>
+          <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
+          <option value="Cédula de Extranjería">Cédula de Extranjería</option>
+          <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <input class="controls" type="text" id="documento" name="documento" placeholder="Número de Documento" required>
+      </div>
+      <div class="input-group">
+        <input class="controls" type="tel" id="telefono" name="telefono" placeholder="Ingrese su Teléfono" required>
+      </div>
+      <input class="botons" type="submit" value="Registrar">
+    </form>
+  </section>
+
+  <img src="logo-funlam.png" alt="Logo de la institución" class="logo">
+
+  <script>
+    (function() {
+      const correo = localStorage.getItem("correo")?.trim() || "";
+      const form = document.getElementById("registroForm");
+      const mensajeEl = document.getElementById("mensaje");
+
+      form.addEventListener("submit", async function(event) {
+        event.preventDefault();
+        mensajeEl.textContent = "";
+        mensajeEl.className = "mensaje-fixed";
+
+        const datos = {
+          nombres:        document.getElementById("nombres").value.trim(),
+          apellidos:      document.getElementById("apellidos").value.trim(),
+          tipo_documento: document.getElementById("tipo_documento").value,
+          documento:      document.getElementById("documento").value.trim(),
+          telefono:       document.getElementById("telefono").value.trim(),
+          correo
+        };
+
+        // Validación de campos
+        let valido = true;
+        for (const [key, val] of Object.entries(datos)) {
+          if (!val) {
+            valido = false;
+            mensajeEl.textContent = `❌ El campo "${key}" es obligatorio.`;
+            mensajeEl.classList.add("error");
+            break;
+          }
+        }
+        if (!valido) return;
+
+        try {
+          const res = await fetch("http://localhost:3000/registro", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datos)
+          });
+          const json = await res.json();
+          if (json.mensaje) {
+            mensajeEl.textContent = "✅ " + json.mensaje;
+            mensajeEl.classList.add("success");
+            form.reset();
+            setTimeout(() => {
+              window.location.href = "http://127.0.0.1:5500/interfaz_usuario/index.html";
+            }, 2000);
+          } else {
+            mensajeEl.textContent = "❌ Error en la respuesta del servidor.";
+            mensajeEl.classList.add("error");
+          }
+        } catch (err) {
+          mensajeEl.textContent = "❌ Error al conectar con el servidor.";
+          mensajeEl.classList.add("error");
+          console.error(err);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
